@@ -9,6 +9,9 @@ var app = {
     closeModalElements.forEach((closeModalElement) => {
       closeModalElement.addEventListener('click', app.hideModal);
     });
+
+    const formAddListElement =  document.querySelector('#addListModal form');
+    formAddListElement.addEventListener('submit', app.submitAddListForm);
   },
 
   showAddListModal(){
@@ -20,6 +23,29 @@ var app = {
     const clickedButttonElement = event.currentTarget;
     const modalElement = clickedButttonElement.closest('.modal');
     modalElement.classList.remove('is-active');
+  },
+
+  submitAddListForm(event){
+    event.preventDefault();
+    const formElement = event.currentTarget;
+    const addListFormData = new FormData(formElement);
+    const data = Object.fromEntries(addListFormData); 
+    
+    app.makeListInDOM(data);
+
+    formElement.reset();
+
+    app.hideModal(event);
+  },
+
+  makeListInDOM(data){
+    console.log(data);
+    const templateListElement = document.getElementById('listTemplate');
+    const newListElement = templateListElement.content.cloneNode(true);
+    newListElement.querySelector('.list-title').textContent = data.name;
+
+    const listsContainerElements = document.querySelector('.card-lists');
+    listsContainerElements.append(newListElement);
   },
 
 
