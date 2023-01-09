@@ -25,9 +25,9 @@
             <div class="columns">
 
                 <div class="column is-full">
-                    <div class="card-lists columns">
+                    <div class="okblists columns">
                         <!-- list -->
-                        <div class="column is-one-quarter panel" data-list-id="A">
+                        <div class="column is-one-quarter panel okblist" data-list-id="A">
                             <div class="panel-heading has-background-info">
                                 <div class="columns">
 
@@ -49,7 +49,7 @@
                                     </div>
 
                                     <div class="column is-narrow">
-                                        <a href="#" class="is-pulled-right">
+                                        <a href="#" class="is-pulled-right addCardButton">
                                             <span class="icon is-small has-text-white">
                                                 <i class="fas fa-plus"></i>
                                             </span>
@@ -57,9 +57,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="panel-block is-block has-background-light">
+                            <div class="panel-block is-block has-background-light okbcards">
                                 <!-- card -->
-                                <div class="box" data-card-id="I">
+                                <div class="box card" data-card-id="I">
                                     <div class="columns">
                                         <div class="column">
                                             Faire les courses
@@ -84,7 +84,7 @@
                         <!--/ list -->
 
                         <!-- list -->
-                        <div class="column is-one-quarter panel" data-list-id="B">
+                        <div class="column is-one-quarter panel okblist" data-list-id="B">
                             <div class="panel-heading has-background-info">
                                 <div class="columns">
                                     <div class="column">
@@ -105,7 +105,7 @@
                                     </div>
 
                                     <div class="column is-narrow">
-                                        <a href="#" class="is-pulled-right">
+                                        <a href="#" class="is-pulled-right addCardButton">
                                             <span class="icon is-small has-text-white">
                                                 <i class="fas fa-plus"></i>
                                             </span>
@@ -113,9 +113,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="panel-block is-block has-background-light">
+                            <div class="panel-block is-block has-background-light okbcards">
                                 <!-- card -->
-                                <div class="box" data-card-id="J">
+                                <div class="box okbcard" data-card-id="J">
                                     <div class="columns">
                                         <div class="column">
                                             Réviser le front
@@ -137,7 +137,7 @@
                                 <!--/ card -->
 
                                 <!-- card -->
-                                <div class="box" data-card-id="K">
+                                <div class="box okbcard" data-card-id="K">
                                     <div class="columns">
                                         <div class="column">
                                             Mettre en place les formulaires
@@ -159,7 +159,7 @@
                                 <!--/ card -->
 
                                 <!-- card -->
-                                <div class="box" data-card-id="L">
+                                <div class="box okbcard" data-card-id="L">
                                     <div class="columns">
                                         <div class="column">
                                             Apprendre à se servir de fetch
@@ -181,7 +181,7 @@
                                 <!--/ card -->
 
                                 <!-- card -->
-                                <div class="box" data-card-id="M">
+                                <div class="box okbcard" data-card-id="M">
                                     <div class="columns">
                                         <div class="column">
                                             Brancher l'API
@@ -229,19 +229,44 @@
                 <footer class="modal-card-foot">
                     <button class="button is-success">Save changes</button>
                     <button class="button close" type="button">Cancel</button>
+                </footer>                
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="addCardModal">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <form action="" method="POST">
+                <header class="modal-card-head">
+                    <p class="modal-card-title">Ajouter une carte</p>
+                    <button class="delete close" type="button" aria-label="close"></button>
+                </header>
+                <section class="modal-card-body">
+                    <div class="field">
+                        <label class="label">Contenu</label>
+                        <div class="control">
+                            <input type="text" class="input" name="content" value="" placeholder="Contenu de la carte">
+                        </div>
+                    </div>
+                </section>
+                <footer class="modal-card-foot">
+                    <button class="button is-success">Save changes</button>
+                    <button class="button close" type="button">Cancel</button>
                 </footer>
+                <input type="hidden" name="list_id">
             </form>
         </div>
     </div>
 
     <template id="listTemplate">
         <!-- list -->
-        <div class="column is-one-quarter panel" data-list-id="A">
+        <div class="column is-one-quarter panel okblist" data-list-id="A">
             <div class="panel-heading has-background-info">
                 <div class="columns">
 
                     <div class="column">
-                        <h2 class="has-text-white list-title"></h2>
+                        <h2 class="has-text-white okblist-title"></h2>
 
                         <form action="" method="POST" class="is-hidden">
                             <input type="hidden" name="list-id" value="1">
@@ -258,7 +283,7 @@
                     </div>
 
                     <div class="column is-narrow">
-                        <a href="#" class="is-pulled-right">
+                        <a href="#" class="is-pulled-right addCardButton">
                             <span class="icon is-small has-text-white">
                                 <i class="fas fa-plus"></i>
                             </span>
@@ -266,10 +291,33 @@
                     </div>
                 </div>
             </div>
-            <div class="panel-block is-block has-background-light">                
+            <div class="panel-block is-block has-background-light okbcards">                
             </div>
         </div>
         <!--/ list -->
+    </template>
+
+    <template id="cardTemplate">
+        <!-- card -->
+        <div class="box okbcard" data-card-id="M">
+            <div class="columns">
+                <div class="column okbcard-content">
+                </div>
+                <div class="column is-narrow">
+                    <a href="#">
+                        <span class="icon is-small has-text-primary">
+                            <i class="fas fa-pencil-alt"></i>
+                        </span>
+                    </a>
+                    <a href="#">
+                        <span class="icon is-small has-text-danger">
+                            <i class="fas fa-trash-alt"></i>
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!--/ card -->
     </template>
 
     <!-- Chargement de mon fichier JS -->
