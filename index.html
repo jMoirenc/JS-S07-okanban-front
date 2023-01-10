@@ -83,18 +83,16 @@
 
     <template id="listTemplate">
         <!-- list -->
-        <div class="column is-one-quarter panel okblist" data-list-id="A">
+        <div class="column is-one-quarter panel okblist" data-list-id="">
             <div class="panel-heading has-background-info">
                 <div class="columns">
 
                     <div class="column">
                         <h2 class="has-text-white okblist-title"></h2>
-
-                        <form action="" method="POST" class="is-hidden">
-                            <input type="hidden" name="list-id" value="1">
+                        <form action="" method="POST" class="okblist-form is-hidden">
                             <div class="field has-addons">
                                 <div class="control">
-                                    <input type="text" class="input is-small" name="list-name" value=""
+                                    <input type="text" class="input is-small" name="name" value=""
                                         placeholder="Nom de la liste">
                                 </div>
                                 <div class="control">

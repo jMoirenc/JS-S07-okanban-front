@@ -25,32 +25,65 @@ const listModule = {
   },
 
   async submitAddListForm(event){
-    event.preventDefault();
-    const formElement = event.currentTarget;
-    const addListFormData = new FormData(formElement);
-    // const data = Object.fromEntries(addListFormData); 
+    try {
+      event.preventDefault();
+      const formElement = event.currentTarget;
+      const addListFormData = new FormData(formElement);
+      // const data = Object.fromEntries(addListFormData); 
 
-    const response = await fetch(
-      `${utilsModule.base_url}/lists`,
-      {
-        method: 'POST',
-        body: addListFormData,
+      const response = await fetch(
+        `${utilsModule.base_url}/lists`,
+        {
+          method: 'POST',
+          body: addListFormData,
+        }
+      );
+        
+      if (!response.ok){
+        throw new Error('Pb pour ajouter la liste');
       }
-    );
+
+      const data = await response.json();
       
-    if (!response.ok){
-      throw new Error('Pb pour ajouter la liste');
+      // data.id = Math.floor(Math.random() * 10000);
+      
+      listModule.makeListInDOM(data);
+
+      formElement.reset();
+
+      utils.hideModal();
+    }catch (e){
+      console.log(e);
     }
+  },
 
-    const data = await response.json();
-    
-    // data.id = Math.floor(Math.random() * 10000);
-    
-    listModule.makeListInDOM(data);
+  async submitEditListForm(event){
+    try{
+      event.preventDefault();
+      const formElement = event.currentTarget;
+      const editListFormData = new FormData(formElement);
+      const listId = formElement.closest('.okblist').dataset.listId;
 
-    formElement.reset();
+      const response = await fetch(
+        `${utilsModule.base_url}/lists/${listId}`,
+        {
+          method: 'PATCH',
+          body: editListFormData,
+        }
+      );
+        
+      if (!response.ok){
+        throw new Error('Pb édition de la liste');
+      }
 
-    utils.hideModal();
+      const data = await response.json();
+      
+      formElement.parentElement.querySelector('h2').textContent = data.name;
+
+      listModule.hideEditForm(formElement);
+    }catch (e){
+      listModule.hideEditForm(formElement);
+    }
   },
 
   makeListInDOM(data){
@@ -58,7 +91,13 @@ const listModule = {
 
     const templateListElement = document.getElementById('listTemplate');
     const newListElement = templateListElement.content.cloneNode(true);
-    newListElement.querySelector('.okblist-title').textContent = data.name;
+
+    const listTitleElement = newListElement.querySelector('.okblist-title');
+    listTitleElement.textContent = data.name;
+
+    listTitleElement.addEventListener('dblclick', listModule.showEditForm);
+
+    newListElement.querySelector('.okblist-form').addEventListener('submit', listModule.submitEditListForm);    
 
     newListElement.querySelector('.okblist').dataset.listId = data.id;
 
@@ -74,5 +113,21 @@ const listModule = {
     }
   },
 
+  showEditForm(event){
+    const target = event.currentTarget;
+
+    target.classList.add('is-hidden');
+    const formElement = target.parentElement.querySelector('form');
+    formElement.classList.remove('is-hidden');
+    const nameInputElement = formElement.querySelector('[name=name]');
+    nameInputElement.value = target.textContent;
+    nameInputElement.focus();
+    nameInputElement.select();
+  },
+
+  hideEditForm(formElement){
+    formElement.classList.add('is-hidden');
+    formElement.parentElement.querySelector('h2').classList.remove('is-hidden');
+  },
 
 };
