@@ -64,13 +64,14 @@ const cardModule = {
     }
   },
 
-  order(cards){
+  order(cards, listId){
     try{      
-      let cards = 0;
+      let index = 0;
       for (const card of cards){
-        cardId = card.dataset.cardId;
+        const cardId = card.dataset.cardId;
         const data = new FormData();
         data.append('position', index++);
+        data.append('list_id', listId);
         fetch(
           `${utilsModule.base_url}/cards/${cardId}`,
           {

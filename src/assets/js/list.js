@@ -102,7 +102,7 @@ const listModule = {
     try{      
       let index = 0;
       for (const list of lists){
-        listId = list.dataset.listId;
+        const listId = list.dataset.listId;
         const data = new FormData();
         data.append('position', index++);
         fetch(
@@ -144,10 +144,12 @@ const listModule = {
     }
     console.log(newListElement);
     new Sortable(newListElement.querySelector('.okbcards'), {      
+      group: "cards",
       animation: 150,
       onEnd: function (event) {
         const cardsToReorder = event.to.querySelectorAll('.okbcard');
-        cardModule.order(cardsToReorder);
+        const listId = event.to.closest('.okblist').dataset.listId;
+        cardModule.order(cardsToReorder, listId);
       },
     });
   },
