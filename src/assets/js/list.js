@@ -1,3 +1,6 @@
+import utilsModule from "./utils";
+import cardModule from "./card";
+
 const listModule = {
   async getListsFromAPI (){
     try {
@@ -131,3 +134,5 @@ const listModule = {
   },
 
 };
+
+export default listModule;

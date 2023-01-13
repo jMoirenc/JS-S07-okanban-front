@@ -1,3 +1,5 @@
+import utilsModule from "./utils";
+
 const cardModule = {
 
   showAddCardModal(event) {
@@ -80,3 +82,5 @@ const cardModule = {
   },
 
 };
+
+export default cardModule;

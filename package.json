@@ -1,0 +1,25 @@
+{
+  "name": "okanban-front",
+  "version": "1.0.0",
+  "description": "O-kanban front",
+  "source": "src/index.html",
+  "browserslist": "> 0.5%, last 2 versions, not dead",
+  "scripts": {
+    "start": "parcel",
+    "build": "parcel build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jMoirenc/JS-S07-okanban-front.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jMoirenc/JS-S07-okanban-front/issues"
+  },
+  "homepage": "https://github.com/jMoirenc/JS-S07-okanban-front#readme",
+  "devDependencies": {
+    "parcel": "^2.8.2"
+  }
+}

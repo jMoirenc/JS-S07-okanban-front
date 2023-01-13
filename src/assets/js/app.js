@@ -1,4 +1,8 @@
 
+import cardModule from "./card";
+import listModule from "./list";
+import utilsModule from "./utils";
+
 // on objet qui contient des fonctions
 var app = {  
 
