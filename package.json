@@ -21,5 +21,8 @@
   "homepage": "https://github.com/jMoirenc/JS-S07-okanban-front#readme",
   "devDependencies": {
     "parcel": "^2.8.2"
+  },
+  "dependencies": {
+    "sortablejs": "^1.15.0"
   }
 }

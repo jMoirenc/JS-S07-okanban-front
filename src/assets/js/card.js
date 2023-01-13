@@ -64,6 +64,25 @@ const cardModule = {
     }
   },
 
+  order(cards){
+    try{      
+      let cards = 0;
+      for (const card of cards){
+        cardId = card.dataset.cardId;
+        const data = new FormData();
+        data.append('position', index++);
+        fetch(
+          `${utilsModule.base_url}/cards/${cardId}`,
+          {
+            method: 'PATCH',
+            body: data,            
+          });
+      }
+    }catch (e){
+      console.log(e);
+    }    
+  },
+
   makeCardInDOM(data) {
     console.log(data);
     const templateCardElement = document.getElementById('cardTemplate');

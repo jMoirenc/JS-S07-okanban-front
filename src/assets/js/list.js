@@ -1,3 +1,4 @@
+import Sortable from 'sortablejs';
 import utilsModule from "./utils";
 import cardModule from "./card";
 
@@ -15,6 +16,14 @@ const listModule = {
       for (const list of lists){
         listModule.makeListInDOM(list);
       }
+
+      new Sortable(document.querySelector('.okblists'), {
+        handle: '.okblist-title',
+        animation: 150,
+        onEnd: function (event) {
+          listModule.order(document.querySelectorAll('.okblist'));
+        }, 
+      });
 
     }catch (e){
       console.log(e);
@@ -89,11 +98,30 @@ const listModule = {
     }
   },
 
+  order(lists){
+    try{      
+      let index = 0;
+      for (const list of lists){
+        listId = list.dataset.listId;
+        const data = new FormData();
+        data.append('position', index++);
+        fetch(
+          `${utilsModule.base_url}/lists/${listId}`,
+          {
+            method: 'PATCH',
+            body: data,            
+          });
+      }
+    }catch (e){
+      console.log(e);
+    }    
+  },
+
   makeListInDOM(data){
     console.log(data);   
 
     const templateListElement = document.getElementById('listTemplate');
-    const newListElement = templateListElement.content.cloneNode(true);
+    const newListElement = templateListElement.content.cloneNode(true).querySelector('.okblist');
 
     const listTitleElement = newListElement.querySelector('.okblist-title');
     listTitleElement.textContent = data.name;
@@ -102,7 +130,7 @@ const listModule = {
 
     newListElement.querySelector('.okblist-form').addEventListener('submit', listModule.submitEditListForm);    
 
-    newListElement.querySelector('.okblist').dataset.listId = data.id;
+    newListElement.dataset.listId = data.id;
 
     newListElement.querySelector('.addCardButton').addEventListener('click', cardModule.showAddCardModal);    
 
@@ -114,6 +142,14 @@ const listModule = {
         cardModule.makeCardInDOM(card);
       }      
     }
+    console.log(newListElement);
+    new Sortable(newListElement.querySelector('.okbcards'), {      
+      animation: 150,
+      onEnd: function (event) {
+        const cardsToReorder = event.to.querySelectorAll('.okbcard');
+        cardModule.order(cardsToReorder);
+      },
+    });
   },
 
   showEditForm(event){
